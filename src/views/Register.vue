@@ -67,7 +67,7 @@ export default {
         .then((res) => {
           console.log(res);
           //redirecionar usuario para home
-          this.$router.push({ name: "Home" });
+          this.$router.push({ name: "Login" });
         })
         .catch((err) => {
           this.error = err.response.data.error;
