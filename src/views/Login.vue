@@ -38,7 +38,7 @@
 </template>
 
 <script>
-//const axios = require("axios");
+const axios = require("axios");
 
 export default {
   data() {
@@ -50,6 +50,14 @@ export default {
   },
   methods: {
     login: function () {
+      axios.post('http://7c0adc44b072.ngrok.io ',{
+        email:this.email,
+        password:this.password
+      }).then(response=>{
+        console.log(response)
+      }).catch(err=>{
+        this.error = err.response.data.error;
+      })
       console.log("login");
     },
   },
