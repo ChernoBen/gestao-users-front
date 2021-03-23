@@ -51,10 +51,10 @@ export default {
     };
   },
   methods: {
-    
+
     login: function () {
 
-      axios.post('http://7c0adc44b072.ngrok.io/login ',{
+      axios.post('http://ba1fa980b5ae.ngrok.io/login ',{
 
         email:this.email,
         password:this.password

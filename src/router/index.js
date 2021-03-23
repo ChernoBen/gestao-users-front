@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Users from '../views/Users.vue'
+import axios from 'axios'
 
 Vue.use(VueRouter)
 
@@ -36,13 +37,27 @@ const routes = [
     name: 'Users',
     component: Users,
     //middleware p/rota
-    BeforeEnter:(to,from,next)=>{
+    BeforeEnter: (to, from, next) => {
 
-      if(localStorage.getItem('token') != undefined){
-        
-        next()
-      
-      }else{
+      if (localStorage.getItem('token') != undefined) {
+
+        var req = {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem('token')
+          }
+        }
+        //se passar pelo middleware entao user está autenticado
+        axios.post("http://ba1fa980b5ae.ngrok.io/validate",{},req).then(response => {
+
+          console.log(response)
+          next()
+        }).catch(() => {
+
+          next("/login")
+
+        })
+
+      } else {
 
         next("/login")
       }

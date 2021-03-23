@@ -59,7 +59,7 @@ export default {
   methods: {
     register: function () {
       axios
-        .post("http://7c0adc44b072.ngrok.io/user", {
+        .post("http://ba1fa980b5ae.ngrok.io/user", {
           name: this.name,
           password: this.password,
           email: this.email,
