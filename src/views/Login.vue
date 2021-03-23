@@ -5,32 +5,46 @@
     <div class="columns is-centered">
       <div class="column is-half">
         <div class="notification is-info">
-          <div>
-            <div v-if="error != ''" class="notification is-danger">
-              <p>{{ error }}</p>
+          <div class="field">
+            <div>
+              <div v-if="error != ''" class="notification is-danger">
+                <p>{{ error }}</p>
+              </div>
+              <hr />
             </div>
-            <hr />
+            <p class="control has-icons-left has-icons-right">
+              <input
+                class="input"
+                type="email"
+                placeholder="Email"
+                v-model="email"
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </p>
           </div>
-          <p>E-mail:</p>
-          <input
-            class="input"
-            type="email"
-            placeholder="email@email.com"
-            name=""
-            id=""
-            v-model="email"
-          />
-          <p>Senha:</p>
-          <input
-            class="input"
-            type="password"
-            placeholder="Senha"
-            name=""
-            id=""
-            v-model="password"
-          />
-          <hr />
-          <button @click="login" class="button is-success">Logar</button>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input
+                class="input"
+                type="password"
+                placeholder="Password"
+                v-model="password"
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-success" @click="login">Login</button>
+            </p>
+          </div>
         </div>
       </div>
     </div>
