@@ -19,6 +19,7 @@
           <td>
             <button class="button is-small">Editar</button>|<button
               class="button is-small"
+              @click="openModal(user.idusers)"
             >
               Deletar
             </button>
@@ -26,12 +27,51 @@
         </tr>
       </tbody>
     </table>
+    <!---------inicio modal ------->
+    <div :class="{ modal: true, 'is-active': showModal }">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <!-- inicio card -->
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              Tem certeza que deseja remover este usuário?
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <!-----texto aqui ---->
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a @click="hideModal()" class="card-footer-item">Cancelar</a>
+            <a @click="deleteUser()" class="card-footer-item">Deletar</a>
+          </footer>
+        </div>
+        <!---- fim do card---->
+      </div>
+      <button
+        class="modal-close is-large"
+        aria-label="close"
+        @click="hideModal()"
+      ></button>
+    </div>
+    <!------fim modal ------->
   </div>
 </template>
+
 <script>
 import axios from "axios";
 
 export default {
+  data() {
+    return {
+      users: [],
+      showModal: false,
+      deleteUserId: -1,
+      header: null,
+    };
+  },
   created() {
     var header = {
       headers: {
@@ -44,15 +84,35 @@ export default {
       .then((response) => {
         console.log(response);
         this.users = response.data.users;
+        this.header = header;
       })
       .catch((error) => {
         console.log(error);
       });
   },
-  data() {
-    return {
-      users: [],
-    };
+  methods: {
+    hideModal() {
+      this.showModal = false;
+    },
+    openModal(id) {
+      console.log("id do user: " + id);
+      this.showModal = true;
+      this.deleteUserId = id;
+    },
+    deleteUser() {
+      axios
+        .delete(
+          "http://ba1fa980b5ae.ngrok.io/user/" + this.deleteUserId,
+          this.header
+        )
+        .then((response) => {
+          console.log(response);
+          this.showModal = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   filters: {
     processRole: function (value) {

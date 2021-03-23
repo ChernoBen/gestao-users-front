@@ -6,6 +6,34 @@ import Login from '../views/Login.vue'
 import Users from '../views/Users.vue'
 import axios from 'axios'
 
+function adminAuth(to,from,next){
+
+  if (localStorage.getItem('token') != undefined) {
+
+    var req = {
+      headers: {
+        authorization: "Bearer " + localStorage.getItem('token')
+      }
+    }
+    //se passar pelo middleware entao user está autenticado
+    axios.post("http://ba1fa980b5ae.ngrok.io/validate",{},req).then(response => {
+
+      console.log(response)
+      next()
+
+    }).catch(error => {
+
+      console.log(error)
+      next("/login")
+
+    })
+
+  } else {
+
+    next("/login")
+  }
+}
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,32 +65,8 @@ const routes = [
     name: 'Users',
     component: Users,
     //middleware p/rota
-    BeforeEnter: (to, from, next) => {
-
-      if (localStorage.getItem('token') != undefined) {
-
-        var req = {
-          headers: {
-            authorization: "Bearer " + localStorage.getItem('token')
-          }
-        }
-        //se passar pelo middleware entao user está autenticado
-        axios.post("http://ba1fa980b5ae.ngrok.io/validate",{},req).then(response => {
-
-          console.log(response)
-          next()
-        }).catch(() => {
-
-          next("/login")
-
-        })
-
-      } else {
-
-        next("/login")
-      }
-    }
-  },
+    BeforeEnter:adminAuth
+  }
 ]
 
 const router = new VueRouter({
