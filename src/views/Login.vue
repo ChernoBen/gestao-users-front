@@ -42,36 +42,28 @@ const axios = require("axios");
 
 export default {
   data() {
-
     return {
-
       password: "",
       email: "",
       error: "",
-      url:"http://41e2b44b1b86.ngrok.io"
+      url: "http://41e2b44b1b86.ngrok.io",
     };
   },
   methods: {
-
     login: function () {
-
-      axios.post(url+'/login ',{
-
-        email:this.email,
-        password:this.password
-
-      }).then(response=>{
-        
-        //guardando token em localStorage
-        localStorage.setItem('token',response.data.token)
-        this.$router.push({ name: "Home" });
-      
-      }).catch(err=>{
-
-        this.error = err.response.data.error;
-        
-      })
-    
+      axios
+        .post(url + "/login ", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          //guardando token em localStorage
+          localStorage.setItem("token", response.data.token);
+          this.$router.push({ name: "Home" });
+        })
+        .catch((err) => {
+          this.error = err.response.data.error;
+        });
     },
   },
 };
