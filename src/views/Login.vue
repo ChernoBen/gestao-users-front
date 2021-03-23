@@ -48,13 +48,14 @@ export default {
       password: "",
       email: "",
       error: "",
+      url:"http://41e2b44b1b86.ngrok.io"
     };
   },
   methods: {
 
     login: function () {
 
-      axios.post('http://ba1fa980b5ae.ngrok.io/login ',{
+      axios.post(url+'/login ',{
 
         email:this.email,
         password:this.password
