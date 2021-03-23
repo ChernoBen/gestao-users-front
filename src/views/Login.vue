@@ -52,7 +52,7 @@ export default {
   methods: {
     login: function () {
       axios
-        .post(url + "/login ", {
+        .post(this.url + "/login ", {
           email: this.email,
           password: this.password,
         })
