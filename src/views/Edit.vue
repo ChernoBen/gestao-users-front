@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Registro de Usuario</h2>
+    <h2>Edição de usuario</h2>
     <hr />
     <div class="columns is-centered">
       <div class="column is-half">
@@ -28,17 +28,8 @@
           id=""
           v-model="email"
         />
-        <p>Senha:</p>
-        <input
-          class="input"
-          type="password"
-          placeholder="Senha"
-          name=""
-          id=""
-          v-model="password"
-        />
         <hr />
-        <button @click="register" class="button is-success">Cadastrar</button>
+        <button @click="update" class="button is-success">Salvar</button>
       </div>
     </div>
   </div>
@@ -48,26 +39,45 @@
 const axios = require("axios");
 
 export default {
+  created(){
+    var header = {
+      headers:{
+        Authorization:'Bearer '+ localStorage.getItem('token')
+      }
+    }
+    axios.get(this.url+"/user/"+this.$router.params.id,header).then(res=>{
+      console.log(res)
+      this.id_usuario=res.data.id
+      this.email = res.data.email
+      this.name = res.data.name
+
+    }).catch(error=>{
+
+      console.log(error)
+      this.$router.push({name:"Users"})
+    })
+
+  },
   data() {
     return {
       name: "",
-      password: "",
       email: "",
       error: "",
-      url:"http://ec5ed7937309.ngrok.io "
+      url:"http://ec5ed7937309.ngrok.io",
+      id_usuario:-1
     };
   },
   methods: {
-    register: function () {
+    update: function () {
       axios
         .post(this.url+"/user", {
           name: this.name,
-          password: this.password,
           email: this.email,
+          id:this.id_usuario
         })
         .then((res) => {
           console.log(res);
-          //redirecionar usuario para home
+          //redirecionar usuario para login
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {

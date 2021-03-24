@@ -60,7 +60,7 @@ export default {
       password: "",
       email: "",
       error: "",
-      url: "http://41e2b44b1b86.ngrok.io",
+      url: "http://ec5ed7937309.ngrok.io",
     };
   },
   methods: {

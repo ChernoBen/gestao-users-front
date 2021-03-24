@@ -70,6 +70,7 @@ export default {
       showModal: false,
       deleteUserId: -1,
       header: null,
+      url:"http://ec5ed7937309.ngrok.io"
     };
   },
   created() {
@@ -80,7 +81,7 @@ export default {
     };
 
     axios
-      .get("http://ba1fa980b5ae.ngrok.io/user", header)
+      .get(this.url+"/user", header)
       .then((response) => {
         console.log(response);
         this.users = response.data.users;
@@ -102,7 +103,7 @@ export default {
     deleteUser() {
       axios
         .delete(
-          "http://ba1fa980b5ae.ngrok.io/user/" + this.deleteUserId,
+          this.url+"/user/" + this.deleteUserId,
           this.header
         )
         .then((response) => {

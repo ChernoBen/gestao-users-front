@@ -4,19 +4,20 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Users from '../views/Users.vue'
+import Edit from '../views/Edit.vue'
 import axios from 'axios'
 
 function adminAuth(to, from, next) {
 
   if (localStorage.getItem('token') != undefined) {
-
+    var url = "https://ec5ed7937309.ngrok.io" 
     var req = {
       headers: {
         authorization: "Bearer " + localStorage.getItem('token')
       }
     }
     //se passar pelo middleware entao user está autenticado
-    axios.post("http://ba1fa980b5ae.ngrok.io/validate", {}, req).then(response => {
+    axios.post(url+"/validate", {}, req).then(response => {
 
       console.log(response)
       next()
@@ -64,6 +65,13 @@ const routes = [
     path: '/admin/users',
     name: 'Users',
     component: Users,
+    //middleware p/rota
+    BeforeEnter: adminAuth
+  },
+  {
+    path: '/admin/users/edit/:id',
+    name: 'Edit',
+    component: Edit,
     //middleware p/rota
     BeforeEnter: adminAuth
   }
