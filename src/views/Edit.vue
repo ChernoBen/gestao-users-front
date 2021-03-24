@@ -70,7 +70,7 @@ export default {
   methods: {
     update: function () {
       axios
-        .post(this.url+"/user", {
+        .put(this.url+"/user", {
           name: this.name,
           email: this.email,
           id:this.id_usuario
