@@ -39,13 +39,23 @@
 const axios = require("axios");
 
 export default {
-  created(){
-    var header = {
+    data() {
+    return {
+      name: "",
+      email: "",
+      error: "",
+      url:"http://ec5ed7937309.ngrok.io",
+      id_usuario:-1,
+      header:{
       headers:{
         Authorization:'Bearer '+ localStorage.getItem('token')
       }
     }
-    axios.get(this.url+"/user/"+this.$router.params.id,header).then(res=>{
+    };
+  },
+  created(){
+   
+    axios.get(this.url+"/user/"+this.$router.params.id,this.header).then(res=>{
       console.log(res)
       this.id_usuario=res.data.id
       this.email = res.data.email
@@ -58,15 +68,6 @@ export default {
     })
 
   },
-  data() {
-    return {
-      name: "",
-      email: "",
-      error: "",
-      url:"http://ec5ed7937309.ngrok.io",
-      id_usuario:-1
-    };
-  },
   methods: {
     update: function () {
       axios
@@ -74,7 +75,7 @@ export default {
           name: this.name,
           email: this.email,
           id:this.id_usuario
-        })
+        },this.header)
         .then((res) => {
           console.log(res);
           //redirecionar usuario para login
