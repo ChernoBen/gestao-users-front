@@ -17,7 +17,8 @@
           <td>{{ user.email }}</td>
           <td>{{ user.role | processRole }}</td>
           <td>
-            <button class="button is-small">Editar</button>|<button
+            <router-link :to="{name:'Edit',params:{id:user.id}}"><button class="button is-small">Editar</button></router-link>
+            |<button
               class="button is-small"
               @click="openModal(user.idusers)"
             >
